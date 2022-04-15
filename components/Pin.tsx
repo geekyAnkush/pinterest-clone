@@ -1,67 +1,73 @@
-import { View, Text, StyleSheet,Image,Pressable } from 'react-native'
-import { AntDesign } from '@expo/vector-icons';
-import { useState,useEffect } from 'react';
+import { View, Text, StyleSheet, Image, Pressable } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
+import { useState, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 
-const Pin = ({pin}) => {
-  const onLike = ()=>{}
+const Pin = ({ pin }) => {
+  const navigation = useNavigation();
+  const onLike = () => {};
+  const goToPinScreen = () => {
+    navigation.navigate("Pin", { pin });
+  };
 
-  const [ratio,setRatio] = useState(1);
+  const [ratio, setRatio] = useState(1);
 
-  useEffect(()=>{
-    if(pin.image){
-      Image.getSize(pin.image,(w,h)=>{
-        setRatio(w/h);
-      })
+  useEffect(() => {
+    if (pin.image) {
+      Image.getSize(pin.image, (w, h) => {
+        setRatio(w / h);
+      });
     }
-  },[pin.image])
+  }, [pin.image]);
   return (
-    <View style={styles.pin}>
-        <View>
-          <Image
+    <Pressable onPress={goToPinScreen} style={styles.pin}>
+      <View>
+        <Image
           source={{
-            uri: pin.image
+            uri: pin.image,
           }}
-          style={[styles.image,{aspectRatio:ratio}]}
+          style={[styles.image, { aspectRatio: ratio }]}
         />
         <Pressable onPress={onLike} style={styles.heartBtn}>
           <AntDesign name="hearto" size={20} color="black" />
         </Pressable>
-        </View>
-        <Text style={styles.title} numberOfLines={2}>{pin.title}</Text>
       </View>
-  )
-}
+      <Text style={styles.title} numberOfLines={2}>
+        {pin.title}
+      </Text>
+    </Pressable>
+  );
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    padding:10
+    padding: 10,
   },
   title: {
     fontSize: 16,
-    lineHeight:22,
+    lineHeight: 22,
     fontWeight: "700",
     margin: 5,
-    color:"#181818"
+    color: "#181818",
   },
   image: {
     width: "100%",
-    borderRadius:15,
+    borderRadius: 15,
   },
-  pin:{
-    width:'100%',
-    padding:5
+  pin: {
+    width: "100%",
+    padding: 5,
   },
-  heartBtn:{
+  heartBtn: {
     backgroundColor: "#D3CFD4",
     position: "absolute",
-    bottom:10,
-    right:10,
-    padding:8,
-    borderRadius:50,
-  }
-
+    bottom: 10,
+    right: 10,
+    padding: 8,
+    borderRadius: 50,
+  },
 });
 
 export default Pin;
