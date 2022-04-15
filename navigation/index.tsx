@@ -27,6 +27,7 @@ import {
   RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
+import CreatePinScreen from "../screens/CreatePinScreen";
 
 export default function Navigation({
   colorScheme,
@@ -103,7 +104,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="CreatePin"
-        component={TabOneScreen}
+        component={CreatePinScreen}
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => (
