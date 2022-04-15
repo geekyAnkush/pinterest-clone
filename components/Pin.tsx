@@ -2,32 +2,32 @@ import { View, Text, StyleSheet,Image,Pressable } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { useState,useEffect } from 'react';
 
-const Pin = ({title,img}) => {
+const Pin = ({pin}) => {
   const onLike = ()=>{}
 
   const [ratio,setRatio] = useState(1);
 
   useEffect(()=>{
-    if(img){
-      Image.getSize(img,(w,h)=>{
+    if(pin.image){
+      Image.getSize(pin.image,(w,h)=>{
         setRatio(w/h);
       })
     }
-  },[img])
+  },[pin.image])
   return (
     <View style={styles.pin}>
         <View>
           <Image
           source={{
-            uri: img
+            uri: pin.image
           }}
           style={[styles.image,{aspectRatio:ratio}]}
         />
         <Pressable onPress={onLike} style={styles.heartBtn}>
-          <AntDesign name="hearto" size={24} color="black" />
+          <AntDesign name="hearto" size={20} color="black" />
         </Pressable>
         </View>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.title} numberOfLines={2}>{pin.title}</Text>
       </View>
   )
 }
@@ -39,16 +39,19 @@ const styles = StyleSheet.create({
     padding:10
   },
   title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    margin: 10
+    fontSize: 16,
+    lineHeight:22,
+    fontWeight: "700",
+    margin: 5,
+    color:"#181818"
   },
   image: {
     width: "100%",
-    borderRadius:25,
+    borderRadius:15,
   },
   pin:{
     width:'100%',
+    padding:5
   },
   heartBtn:{
     backgroundColor: "#D3CFD4",
